@@ -1,0 +1,29 @@
+<p class="text-muted">「<%= params[:keyword] %>」の検索結果</p>
+
+<h3>投稿</h3> 
+  <% if @posts.present? %>
+   <% @posts.each do |post| %>
+    <p><%= link_to post.body.truncate(30), post_path(post) %></p>
+   <% end %>
+  <% else %>
+    <p class="text-muted">一致する投稿が見つかりませんでした。</p>
+  <% end %>
+
+<h3>タグ</h3>
+  <% if @tags.present? %>
+   <% @tags.each do |tag| %>
+    <p><%= link_to "##{tag.name}", tag_path(tag) %></p>
+   <% end %>
+  <% else %>
+   <p class="text-muted">一致するタグが見つかりませんでした。</p>
+  <% end %>
+
+<h3>ユーザー</h3>
+  <% if @users.present? %>
+   <% @users.each do |user| %>
+    <p><%= link_to user.nickname, user_path(user) %></p>
+   <% end %>
+  <% else %>
+   <p class="text-muted">一致するユーザーが見つかりませんでした。</p>
+  <% end %>
+

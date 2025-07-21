@@ -1,0 +1,37 @@
+<div class="container">
+  <h2 class="mb-4">投稿一覧</h2>
+  <div class="row">
+    <% @posts.each do |post| %>
+      <div class="col-md-4 mb-4 d-flex">
+        <div class="card w-100 h-100 d-flex flex-column">
+
+          <% first_photo = post.photos.find { |photo| photo.image.attached? } %>
+          <% if first_photo %>
+            <%= link_to post_path(post) do %>
+              <%= image_tag(
+                    first_photo.image.variant(resize_to_fill: [300, 200]), 
+                    class: "card-img-top object-fit-cover", 
+                    alt: post.title
+                  ) %>
+            <% end %>
+          <% end %>
+
+          <div class="card-body d-flex flex-column justify-content-between">
+            <% if post.created_at >= 3.days.ago %>
+              <span class="badge bg-danger mb-2">New!</span>
+            <% end %>
+
+            <h5 class="card-title"><%= post.title %></h5>
+
+            <p class="card-text mb-2">
+              投稿者: <%= link_to post.user.nickname, user_path(post.user) %><br>
+              ❤️ <%= post.likes.count %>件のいいね
+            </p>
+
+            <%= link_to "詳細を見る", post_path(post), class: "btn btn-outline-primary mt-auto" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

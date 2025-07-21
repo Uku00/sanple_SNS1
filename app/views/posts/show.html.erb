@@ -1,0 +1,47 @@
+<h2>投稿詳細</h2>
+
+<% if @post.user.avatar_image.attached? %>
+  <%= image_tag @post.user.avatar_image.variant(resize_to_limit: [50, 50]), class: "rounded-circle" %>
+<% end %>
+
+<% @post.photos.each do |photo| %>
+  <% if photo.image.attached? %>
+    <div style="display: flex; flex-direction: <%= photo.image_position == 'left' ? 'row' : 'row-reverse' %>; align-items: center; margin-bottom: 20px;">
+      <%= image_tag photo.image.variant(resize_to_limit: [600, 600]), style: "margin: 0 20px;" %>
+      <% if photo.description.present? %>
+        <p style="color: <%= photo.text_color.presence || '#000' %>; text-align: <%= photo.text_align.presence || 'left' %>;">
+          <strong>画像説明:</strong> <%= photo.description %>
+        </p>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+
+<p><strong>説明:</strong> <%= @post.body %></p>
+
+<p><strong>投稿者:</strong> <%= @post.user.nickname %></p>
+
+<% if current_user == @post.user %>
+  <%= link_to "編集", edit_post_path(@post), class: "btn btn-outline-primary" %>
+  <%= link_to "削除", post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-outline-danger" %>
+<% end %>
+
+<p>❤️ <%= @post.likes.count %>件のいいね</p>
+
+<% if current_user && current_user != @post.user %>
+  <% if current_user.likes.exists?(post: @post) %>
+    <%= button_to "❤️ いいね取り消す", post_like_path(@post), method: :delete, class: "btn btn-outline-danger" %>
+  <% else %>
+    <%= button_to "♡ いいねする", post_like_path(@post), method: :post, class: "btn btn-outline-primary" %>
+  <% end %>
+<% end %>
+
+
+<p>タグ一覧:</p>
+<ul>
+  <% @post.tags.each do |tag| %>
+    <li>#<%= tag.name %></li>
+  <% end %>
+</ul>
+
+<%= link_to "← 投稿一覧へ戻る", mypage_path %>

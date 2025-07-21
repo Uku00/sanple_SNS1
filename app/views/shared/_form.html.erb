@@ -1,0 +1,30 @@
+<%= form_with model: @post do |f| %>
+  <%= f.text_field :title, placeholder: "タイトル" %>
+
+  <%= f.fields_for :photos do |pf| %>
+    <div class="d-flex mb-3" style="gap: 20px;">
+      <div style="flex: 2;">
+        <%= pf.text_area :description, placeholder: "説明文を入力" %>
+        <div>
+          <%= pf.label :text_color, "文字色" %>
+          <%= pf.color_field :text_color, value: pf.object.text_color || "#000000" %>
+        </div>
+        <div>
+          <%= pf.label :text_align, "文字の位置" %>
+          <%= pf.select :text_align, options_for_select([["左寄せ", "left"], ["中央", "center"], ["右寄せ", "right"]], pf.object.text_align) %>
+        </div>
+      </div>
+
+      <div style="flex: 1;">
+        <%= pf.label :image, "画像アップロード" %><br>
+        <%= pf.file_field :image %>
+        <div>
+          <%= pf.label :image_position, "画像の位置" %>
+          <%= pf.select :image_position, options_for_select([["左", "left"], ["中央", "center"], ["右", "right"]], pf.object.image_position) %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%= f.submit "投稿する" %>
+<% end %>

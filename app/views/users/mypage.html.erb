@@ -1,0 +1,40 @@
+<h2><%= current_user.nickname %>さんのマイページ</h2>
+
+<%= link_to '編集', edit_user_path(current_user), class: 'btn btn-primary' %>
+
+<% if current_user.avatar_image.attached? %>
+  <%= image_tag current_user.avatar_image.variant(resize_to_limit: [150, 150]), 
+                alt: "#{current_user.nickname}のプロフィール画像", 
+                class: "rounded-circle mb-3" %>
+<% else %>
+  <%= image_tag "no_avatar.png", alt: "プロフィール画像なし", class: "rounded-circle mb-3",size: "150x150" %>
+<% end %>
+
+<p>ニックネーム: <%= current_user.nickname %></p>
+<p>自己紹介: <%= current_user.introduction %></p>
+
+<hr>
+
+<% @posts.each do |post| %>
+  <div class="col-md-4 mb-4">
+    <div class="card">
+      <% first_photo = post.photos.find { |photo| photo.image.attached? } %>
+      <% if first_photo %>
+        <%= link_to post_path(post) do %>
+          <%= image_tag first_photo.image.variant(resize_to_limit: [300, 300]), class: "card-img-top", alt: post.title %>
+        <% end %>
+      <% else %>
+        <%= link_to post_path(post) do %>
+          <img src="https://via.placeholder.com/300" class="card-img-top" alt="No image available">
+        <% end %>
+      <% end %>
+
+      <div class="card-body">
+        <h5 class="card-title"><%= post.title.presence || "タイトルなし" %></h5>
+        <p class="card-text">
+          ❤️ <%= post.likes.count %>件のいいね
+        </p>
+      </div>
+    </div>
+  </div>
+<% end %>

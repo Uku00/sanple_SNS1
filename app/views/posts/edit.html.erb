@@ -1,0 +1,20 @@
+<h2>投稿編集</h2>
+
+<%= form_with(model: @post, local: true) do |f| %>
+  <div>
+    <%= f.label :image, "画像を再選択" %><br>
+    <%= f.file_field :image %>
+  </div>
+
+  <div>
+    <%= f.label :body, "説明文" %><br>
+    <%= f.text_area :body %>
+  </div>
+
+  <div>
+    <%= f.label :tag_name, "タグ（カンマ区切り）" %><br>
+    <%= f.text_field :tag_name %>
+  </div>
+
+  <%= f.submit "更新する", class: "btn btn-primary" %>
+<% end %>
