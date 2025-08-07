@@ -6,10 +6,12 @@ class UsersController < ApplicationController
 
   def mypage
     @user = current_user
-    @posts = current_user.posts.includes(:photos)
+    @posts = current_user.posts.includes(:photos, :likes)
   end
 
   def show
+    @user = User.find(params[:id])
+    @posts = @user.posts
   end
 
   def edit
