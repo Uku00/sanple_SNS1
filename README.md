@@ -1,24 +1,70 @@
-# README
+# FirstSteps 💪📸  
+筋トレをもっと楽しく、もっと続けたくなるSNSアプリ
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+---
 
-Things you may want to cover:
+## 🔍 概要
 
-* Ruby version
+**『Firststeps』** は、筋トレの「成果・継続・仲間」を見える化するSNS風Webアプリです。  
+トレーニングの様子を画像と一緒に投稿し、他のユーザーと励まし合いながら、**習慣化とモチベーションの維持**を支援します。
 
-* System dependencies
+---
 
-* Configuration
+## 🎯 主な機能
 
-* Database creation
+| 機能カテゴリ | 内容 |
+|--------------|------|
+| 投稿         | 画像＋テキストの投稿（筋トレ記録） |
+| タグ         | ハッシュタグでトレーニング内容分類（例：#ベンチプレス） |
+| いいね       | 投稿に共感したらワンタップでリアクション |
+| フォロー     | 気になる人がいればそのユーザーをフォロー |
+| 検索         | ユーザー／タグ／投稿のキーワード検索 |
+| マイページ   | プロフィール編集・投稿一覧・フォロワー表示 |
 
-* Database initialization
+---
 
-* How to run the test suite
+## 🛠 使用技術
 
-* Services (job queues, cache servers, search engines, etc.)
+| 分類 | 技術 |
+|------|------|
+| フロントエンド | HTML / CSS / ERB（Rails） |
+| バックエンド   | Ruby on Rails 7 |
+| 認証            | Devise（ユーザー登録・ログイン） |
+| DB             | MySQL |
+| 開発環境        | Docker（Rails + MySQL） |
+| その他          | Git / GitHub / Markdown  |
 
-* Deployment instructions
+---
 
-* ...
+## 📸 画面イメージ
+
+| 画面           | 内容                     |
+|----------------|--------------------------|
+| トップページ    | サインアップ／ログイン誘導 |
+| 投稿一覧ページ  | 全ユーザーの投稿タイムライン |
+| 投稿詳細ページ  | 画像・テキスト・いいね・コメント |
+| マイページ      | プロフィール、投稿編集／削除 |
+| 投稿作成ページ  | 画像アップロード＋テキスト＋タグ選択 |
+
+---
+
+## ⚙️ セットアップ手順（ローカル環境）
+
+```bash
+# リポジトリをクローン
+git clone https://github.com/your-name/muscle-commit.git
+cd muscle-commit
+
+# Docker環境構築
+docker-compose build
+docker-compose up -d
+
+# コンテナ内に入る
+docker-compose exec web bash
+
+# DB作成＆マイグレーション
+rails db:create
+rails db:migrate
+
+# 初期データ投入（任意）
+rails db:seed
